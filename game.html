@@ -13,11 +13,68 @@
 
     <body>
           <canvas id="id-canvas" width="480" height="380"></canvas>
+          <hr>
+          <input id='id-input-speed' type="range" value="1">
 
+          <div class="">
+            <textarea id="id-text-log" rows="20" cols="70"></textarea>
+          </div>
 <script>
-var canvas = document.querySelector('#id-canvas')
-var context = canvas.getContext('2d')
-var log = console.log.bind(console)
+
+
+// var log = console.log.bind(console)
+
+var e = sel => document.querySelector(sel)
+
+var log = function(s) {
+  e('#id-text-log').value += '\n' + s
+}
+
+
+var Game = function(fps) {
+  var g = {
+    actions: {},
+    keydowns: {},
+  }
+
+  var canvas = document.querySelector('#id-canvas')
+  var context = canvas.getContext('2d')
+
+  g.canvas = canvas
+  g.context = context
+
+  // draw
+  g.drawImage = function(cmImage) {
+    g.context.drawImage(cmImage.image, cmImage.x, cmImage.y)
+  }
+
+  // events
+  window.addEventListener('keydown', function(event){
+    g.keydowns[event.key] = true
+    // log(event.key)
+  })
+
+  window.addEventListener('keyup', function(event){
+    g.keydowns[event.key] = false
+  })
+
+  g.registerAction = function(key, callback) {
+    g.actions[key] = callback
+  }
+
+  // timer
+  window.fps = 30
+  var runloop = function() {
+
+  }
+
+  setTimeout(function(){
+    runloop()
+  }, 1000/fps)
+
+  return g;
+
+}
 
 var imageFromPath = function(path) {
   var img = new Image()
@@ -27,10 +84,14 @@ var imageFromPath = function(path) {
 
 var __main = function() {
 
-  var paddle = imageFromPath('paddle.png')
-  paddle.onload = function() {
-    context.drawImage(paddle, 120, 250)
-  }
+  var g = Game(30)
+  var image = imageFromPath('paddle.png')
+  g.drawImage(image)
+
+  // var paddle = imageFromPath('paddle.png')
+  // paddle.onload = function() {
+  //   context.drawImage(paddle, 120, 250)
+  // }
 
 }
 
