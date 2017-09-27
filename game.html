@@ -22,13 +22,14 @@
 <script>
 
 
-// var log = console.log.bind(console)
+var log = console.log.bind(console)
 
-var e = sel => document.querySelector(sel)
+// var e = sel => document.querySelector(sel)
 
-var log = function(s) {
-  e('#id-text-log').value += '\n' + s
-}
+// var log = function(s) {
+//   console.log(s)
+//   e('#id-text-log').value += '\n' + s
+// }
 
 
 var Game = function(fps) {
@@ -62,6 +63,8 @@ var Game = function(fps) {
     g.actions[key] = callback
   }
 
+
+
   // timer
   window.fps = 30
   var runloop = function() {
@@ -82,16 +85,48 @@ var imageFromPath = function(path) {
   return img
 }
 
+var aInb = function(x, x1, x2) {
+  return x >= x1 && x <= x2
+}
+
+var collide = function(ball) {
+  var a = o
+  var b = ball
+
+}
+
 var __main = function() {
+
+  var images = {
+    ball: 'ball.png',
+    paddle: 'paddle.png',
+    brick: 'brick.png',
+  }
 
   var g = Game(30)
   var image = imageFromPath('paddle.png')
-  g.drawImage(image)
 
-  // var paddle = imageFromPath('paddle.png')
-  // paddle.onload = function() {
-  //   context.drawImage(paddle, 120, 250)
-  // }
+  // 增加鼠标事件
+  // mouse event
+  var enableDrag = false
+
+  g.canvas.addEventListener('mousedown', function(event){
+    var x = event.offsetX
+    var y = event.offsetY
+    log(x, y, 'down')
+  })
+
+  g.canvas.addEventListener('mousemove', function(event) {
+    var x = event.offsetX
+    var y = event.offsetY
+    log(x, y, 'move')
+  })
+
+  g.canvas.addEventListener('mouseup', function(event) {
+    var x = event.offsetX
+    var y = event.offsetY
+    log(x, y, 'up')
+  })
 
 }
 
