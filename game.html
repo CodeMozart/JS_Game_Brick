@@ -63,6 +63,9 @@ var Game = function(fps) {
     g.actions[key] = callback
   }
 
+  g.replaceScene = function(scene) {
+    g.scene = scene
+  }
 
 
   // timer
@@ -104,6 +107,9 @@ var __main = function() {
   }
 
   var g = Game(30)
+  var s = Scene(g)
+  g.runWithScene(s)
+
   var image = imageFromPath('paddle.png')
 
   // 增加鼠标事件
